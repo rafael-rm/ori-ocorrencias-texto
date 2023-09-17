@@ -1,4 +1,2 @@
-*.html linguist-vendored=true
-*.htm linguist-vendored=true
 *.htm* linguist-vendored=true
 *.css linguist-vendored=true
