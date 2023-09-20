@@ -24,11 +24,16 @@ public class DataController
             text = Regex.Replace(text, @"[:;()\[\].,?!<>]", string.Empty);
             text = Regex.Replace(text, @"[^\p{L}\d\sÀ-ÖØ-öø-ÿ]", string.Empty);
             text = text.Normalize(NormalizationForm.FormD);
-            
             text = new string(text.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray());
-            dictionaryFiles[file.Key] = text;
             
             Console.WriteLine($"[INFO] Texto do arquivo {file.Key} limpo e normalizado com sucesso.");
+            
+            text = text.RemoveStopWords("pt");
+            text = text.RemoveStopWords("en");
+            
+            Console.WriteLine($"[INFO] Removido stop-words do texto do arquivo {file.Key} com sucesso.");
+            
+            dictionaryFiles[file.Key] = text;
         }
 
         Console.WriteLine($"[INFO] Todos os textos dos {dictionaryFiles.Count} foram limpos e normalizados com sucesso.");
@@ -90,10 +95,5 @@ public class DataController
         Console.WriteLine($"$[INFO] Caracteres totais: {allText.Length}");
         
         return Task.FromResult(allText);
-    }
-
-    public static Task<string> RemoveStopWords(string input, string shortLanguageName)
-    {
-        return Task.FromResult(input.RemoveStopWords(shortLanguageName));
     }
 }
