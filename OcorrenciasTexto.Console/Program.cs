@@ -15,6 +15,9 @@ abstract class Program
         Dictionary<string, string> filesText = await DataController.GetTreatedTextFiles(pathFolderHtmls);
 
         string allText = await DataController.GetAllTextDictonary(filesText);
+
+        allText = await DataController.RemoveStopWords(allText, "pt");
+        allText = await DataController.RemoveStopWords(allText, "en");
         
         Dictionary<string, int> wordCount = await DataController.GetRepetitionCount(allText);
 

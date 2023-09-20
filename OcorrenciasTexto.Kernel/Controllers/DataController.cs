@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using OcorrenciasTexto.Kernel.Repositories;
+using StopWord;
 
 namespace OcorrenciasTexto.Kernel.Controllers;
 
@@ -89,5 +90,10 @@ public class DataController
         Console.WriteLine($"$[INFO] Caracteres totais: {allText.Length}");
         
         return Task.FromResult(allText);
+    }
+
+    public static Task<string> RemoveStopWords(string input, string shortLanguageName)
+    {
+        return Task.FromResult(input.RemoveStopWords(shortLanguageName));
     }
 }
